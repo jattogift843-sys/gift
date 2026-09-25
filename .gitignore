@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# secrets / env
+.env
+.env.*.local
+
+# uploaded proof / KYC files
+src/db/uploads/
+
+# raw source videos (identical copies live in public/assets/video/)
+fx movie/
+
+# editor / OS / local tooling
+.claude/settings.local.json
+.DS_Store
+Thumbs.db
+*.log
+scratch_*

@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>MT5 Smart Market — Trade & Invest</title>
+  <meta name="description" content="MT5 Smart Market — trade global markets and grow your capital with managed, high-yield investment accounts. Fast, secured payouts." />
+  <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/assets/img/logo.svg" />
+  <meta name="theme-color" content="#05070d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <script src="/config.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container">
+      <a class="brand" href="/"><img class="mark" src="/assets/img/logo.svg" alt="" width="34" height="34" /> MT5 Smart Market</a>
+      <div class="nav-links">
+        <a href="#rates" class="hide-sm">Rates</a>
+        <a href="#ai-bot" class="hide-sm">AI Bot</a>
+        <a href="#about" class="hide-sm">About us</a>
+        <a href="#testimonials" class="hide-sm">Testimonials</a>
+        <a href="#contact" class="hide-sm">Contact</a>
+        <a href="/login">Sign in</a>
+        <a href="/register" class="btn primary sm">Open account</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <video autoplay muted loop playsinline><source src="/assets/video/market.mp4" type="video/mp4" /></video>
+    <div class="veil"></div>
+    <div class="container">
+      <span class="pill dot up">Live desk · MT5 infrastructure</span>
+      <h1 class="mt-2">Trade the world's markets.<br /><span class="g">Grow on autopilot.</span></h1>
+      <p class="lead">
+        MT5 Smart Market pairs a professional MetaTrader-5 style trading desk with
+        managed accounts that pay scheduled returns — FX, metals, indices and crypto,
+        all from one place, with fast payouts verified by MT5 Smart Market.
+      </p>
+      <div class="cta">
+        <a href="/register" class="btn primary">Create your account</a>
+        <a href="#rates" class="btn ghost">See today's rates</a>
+      </div>
+      <div class="stats-strip">
+        <div><div class="n g" id="h-daily">—</div><div class="muted">Daily return up to</div></div>
+        <div><div class="n" id="h-monthly">—</div><div class="muted">Projected monthly</div></div>
+        <div><div class="n">0.0&nbsp;pips</div><div class="muted">Raw spreads from</div></div>
+        <div><div class="n">1:100</div><div class="muted">Leverage up to</div></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="ticker">
+    <div class="container" style="overflow:hidden"><div class="track" id="ticker">Loading live quotes…</div></div>
+  </div>
+
+  <!-- ================= RATES ================= -->
+  <section class="section container" id="rates">
+    <h2>Today's rates</h2>
+    <p class="sub">Transparent, scheduled returns. Fund your account, choose a rate, and payouts are credited automatically — capital returned at term end.</p>
+    <div class="card mt-4" style="padding:34px;display:flex;gap:32px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+      <div>
+        <div class="muted" style="font-size:13px;text-transform:uppercase;letter-spacing:.6px">Headline rate</div>
+        <div style="font-size:3.4rem;font-weight:800;font-family:var(--mono)" class="g" id="rate-hero">—</div>
+        <div class="muted">per day on our top account · from <span id="rate-min">—</span> to open</div>
+      </div>
+      <a href="/register" class="btn primary">Open account</a>
+    </div>
+    <div class="grid cols-4 mt-3" id="rate-tiers"></div>
+    <p class="faint mt-3" style="font-size:12.5px">Returns are target rates for the managed desk. Trading and investing carry risk — only commit funds you can afford to have at risk.</p>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="section container" id="about">
+    <h2>About us</h2>
+    <div class="grid cols-2 mt-4" style="gap:34px;align-items:start">
+      <div>
+        <p class="lead" style="color:#c7d0de;font-size:1.05rem">
+          Welcome to MT5 Smart Market. We're a team of traders, quants and engineers who
+          believe growing your money shouldn't mean watching charts all day.
+        </p>
+        <p class="muted mt-2">
+          We run a disciplined managed desk across foreign exchange, precious metals, global
+          indices and digital assets. Our members deposit, choose a rate that suits their goals,
+          and receive scheduled returns straight to their wallet — while our desk does the work.
+        </p>
+        <p class="muted mt-2">
+          Every deposit and every withdrawal is reviewed and approved by MT5 Smart Market before it
+          settles, so you always know your funds are handled deliberately and paid out on time. Thousands of
+          members across Africa, Europe, Asia and the Americas trust us with their capital.
+        </p>
+      </div>
+      <div class="grid cols-2" style="gap:14px">
+        <div class="feature"><div class="ic">📈</div><h4>Managed desk</h4><p>FX, metals, indices and crypto traded by our team — you don't lift a finger.</p></div>
+        <div class="feature"><div class="ic">🔁</div><h4>Scheduled returns</h4><p>ROI credited to your balance automatically, every 6–24 hours.</p></div>
+        <div class="feature"><div class="ic">🛡️</div><h4>MT5 Smart Market approval</h4><p>MT5 Smart Market verifies and approves every deposit and withdrawal before it settles.</p></div>
+        <div class="feature"><div class="ic">🔗</div><h4>Your wallets, your rules</h4><p>Link crypto wallets and withdraw in one click once approved.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AI TRADING BOT ================= -->
+  <section class="section container" id="ai-bot">
+    <span class="pill dot up">New · Automated trading</span>
+    <h2 class="mt-2">The MT5 AI Trading Bot</h2>
+    <p class="lead" style="color:#c7d0de;max-width:760px">
+      Put our trading engine to work for you. Choose how long you want the AI to trade and the
+      profit you're aiming for, set your stake, and the bot does the rest — placing trades around
+      the clock across FX, metals, indices and crypto. When it hits your target or the time is up,
+      your stake plus every bit of profit lands back in your balance.
+    </p>
+
+    <div class="grid cols-3 mt-4">
+      <div class="feature"><div class="ic">🎯</div><h4>You set the goal</h4><p>Pick a profit target — 10%, 20%, 35%, 50% or 100% of your stake. The bot works toward exactly that.</p></div>
+      <div class="feature"><div class="ic">⏱️</div><h4>You set the clock</h4><p>Run it for 1, 3, 7, 14 or 30 days. It stops the moment your target is reached — even if that's early.</p></div>
+      <div class="feature"><div class="ic">🔔</div><h4>You stay informed</h4><p>Every trade triggers an in-app alert and a periodic email summary. Watch progress live on your dashboard.</p></div>
+      <div class="feature"><div class="ic">🔒</div><h4>Your stake is ring-fenced</h4><p>The amount you commit is the most the session can ever risk. Nothing else in your balance is touched.</p></div>
+      <div class="feature"><div class="ic">🧠</div><h4>Institutional engine</h4><p>The same managed-desk logic our team uses, running automatically on a high-frequency schedule.</p></div>
+      <div class="feature"><div class="ic">💸</div><h4>Automatic payout</h4><p>On completion, stake + profit is credited straight to your available balance — ready to withdraw or reinvest.</p></div>
+    </div>
+
+    <div class="grid cols-2 mt-4" style="gap:24px;align-items:start">
+      <div class="card">
+        <h3>How it works</h3>
+        <ol class="muted mt-2" style="padding-left:20px;display:grid;gap:10px">
+          <li><b>Open the AI Trading Bot</b> tab in your member dashboard.</li>
+          <li><b>Choose your plan</b> — trading duration and profit target from the options MT5 Smart Market sets.</li>
+          <li><b>Enter your stake.</b> It moves from your available balance into the bot for the duration of the run.</li>
+          <li><b>The AI trades automatically</b> — roughly a trade every few minutes, biased toward your target.</li>
+          <li><b>It finishes</b> when the profit target is hit or the duration ends, whichever comes first.</li>
+          <li><b>You're paid out</b> — original stake plus all profit returns to your balance instantly.</li>
+        </ol>
+        <p class="faint mt-2" style="font-size:12px">Automated trading carries risk. Targets are objectives, not guarantees; the bot can never lose more than the stake you commit to a session.</p>
+      </div>
+      <div class="card">
+        <h3>Example run</h3>
+        <div class="mt-2" style="display:grid;gap:12px">
+          <div class="kv"><span class="k">Stake</span><span class="mono">2,000.00</span></div>
+          <div class="kv"><span class="k">Duration</span><span class="mono">7 days</span></div>
+          <div class="kv"><span class="k">Profit target</span><span class="mono">20%</span></div>
+          <div class="kv"><span class="k">Target profit</span><span class="mono g">+400.00</span></div>
+          <div class="kv"><span class="k">Projected payout</span><span class="mono">2,400.00</span></div>
+          <div class="kv"><span class="k">Trades placed</span><span class="mono">~120</span></div>
+        </div>
+        <a href="/register" class="btn primary block mt-3">Open an account to start the bot</a>
+        <p class="faint mt-1 center" style="font-size:12px">Illustrative figures. Your available options are configured by MT5 Smart Market.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <section class="section container" id="testimonials">
+    <h2>What our members say</h2>
+    <p class="sub">Real members, real payouts. Here's what people tell us about investing with MT5 Smart Market.</p>
+    <div class="grid cols-3 mt-4" id="testimonial-grid"></div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="section container" id="contact">
+    <h2>Contact us</h2>
+    <div class="grid cols-2 mt-4" style="gap:30px;align-items:start">
+      <div>
+        <p class="muted">Questions about funding, withdrawals or your account? Our team is here around the clock.</p>
+        <div class="mt-3">
+          <div class="kv"><span class="k">Support email</span><span class="mono" id="c-email">support@mt5smartmarket.com</span></div>
+          <div class="kv"><span class="k">Live hours</span><span>24 / 7, including weekends</span></div>
+          <div class="kv"><span class="k">Response time</span><span>Typically under 15 minutes</span></div>
+        </div>
+        <p class="faint mt-3" style="font-size:12.5px">Already a member? Sign in and use the in-app notifications — our team replies there too.</p>
+      </div>
+      <div class="card">
+        <h3>Send us a message</h3>
+        <form id="contact-form" class="mt-2">
+          <div class="row">
+            <div class="field" style="flex:1"><label>Name</label><input class="input" name="name" required /></div>
+            <div class="field" style="flex:1"><label>Email</label><input class="input" type="email" name="email" required /></div>
+          </div>
+          <div class="field"><label>Message</label><textarea class="input" name="message" rows="4" required></textarea></div>
+          <button class="btn primary block" type="submit">Send message</button>
+          <p class="faint mt-1" style="font-size:12px" id="contact-note"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container center">
+    <div class="card" style="padding:48px">
+      <h2>Ready to open your account?</h2>
+      <p class="sub" style="margin:12px auto 0">Set up in under a minute. MT5 Smart Market approves your account, then you're in.</p>
+      <div class="cta" style="justify-content:center;margin-top:24px">
+        <a href="/register" class="btn primary">Open account</a>
+        <a href="/login" class="btn ghost">I already have one</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container between wrap">
+      <div><span class="brand"><img class="mark" src="/assets/img/logo.svg" alt="" width="30" height="30" /> MT5 Smart Market</span><p class="mt-1">Trade &amp; invest — managed accounts with fast, verified payouts.</p></div>
+      <div class="faint">© <span id="yr"></span> MT5 Smart Market. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { api, fmtNum, fmtMoney } from '/assets/js/core.js';
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    const quoteRow = (q) => {
+      const dir = (q.change ?? 0) >= 0;
+      return `<span class="sym">${q.symbol} <b class="${dir ? 'up' : 'down'}">${fmtNum(q.price, q.price >= 100 ? 2 : 4)}</b> <span class="${dir ? 'up' : 'down'}">${dir ? '▲' : '▼'}</span></span>`;
+    };
+
+    async function loadMarket() {
+      try {
+        const quotes = await api('/market/quotes', { silent: true });
+        document.getElementById('ticker').innerHTML = [...quotes, ...quotes].map(quoteRow).join('');
+      } catch { /* */ }
+    }
+
+    async function loadRates() {
+      try {
+        const r = await api('/rates', { silent: true });
+        document.getElementById('h-daily').textContent = `${fmtNum(r.bestDailyReturn, 1)}%`;
+        document.getElementById('h-monthly').textContent = `${fmtNum(r.bestMonthlyReturn, 0)}%`;
+        document.getElementById('rate-hero').textContent = `${fmtNum(r.bestDailyReturn, 1)}%`;
+        document.getElementById('rate-min').textContent = fmtMoney(r.minStake);
+        document.getElementById('rate-tiers').innerHTML = r.tiers.map((t) => `
+          <div class="card tight">
+            <div class="between"><b>${t.name}</b><span class="pill up">${fmtNum(t.dailyReturn, 1)}%/day</span></div>
+            <div class="stat mt-1"><div class="value" style="font-size:20px">${fmtNum(t.dailyReturn, 2)}%</div><div class="sub muted">payout every ${t.payoutEvery}</div></div>
+            <div class="kv"><span class="k">Term</span><span>${t.term}</span></div>
+            <div class="kv"><span class="k">From</span><span>${fmtMoney(t.from)}</span></div>
+            <a href="/register" class="btn primary block mt-2">Get this rate</a>
+          </div>`).join('');
+      } catch { /* */ }
+    }
+
+    async function loadTestimonials() {
+      try {
+        const items = await api('/testimonials', { silent: true });
+        document.getElementById('testimonial-grid').innerHTML = items.slice(0, 6).map((t) => `
+          <div class="feature">
+            <div style="color:#ffc94d;letter-spacing:2px">${'★'.repeat(t.rating || 5)}</div>
+            <p class="mt-1" style="font-size:14px;color:var(--text)">"${t.text}"</p>
+            <div class="row mt-2" style="align-items:center;gap:9px">
+              <span style="width:30px;height:30px;border-radius:50%;background:var(--brand-grad);color:#04121a;font-weight:800;display:grid;place-items:center">${(t.name || '?').charAt(0)}</span>
+              <div style="font-size:12.5px"><b>${t.name}</b><div class="faint">${t.location || ''}${t.plan ? ` · ${t.plan} plan` : ''}</div></div>
+            </div>
+          </div>`).join('');
+      } catch { /* */ }
+    }
+
+    try {
+      const cfg = await api('/config', { silent: true });
+      if (cfg.supportEmail) document.getElementById('c-email').textContent = cfg.supportEmail;
+    } catch { /* */ }
+
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      e.target.reset();
+      document.getElementById('contact-note').textContent = 'Thanks — your message has been received. Our team will reply to your email shortly.';
+    });
+
+    loadMarket(); loadRates(); loadTestimonials();
+    setInterval(loadMarket, 6000);
+  </script>
+  <script type="module" src="/assets/js/i18n.js"></script>
+  <script type="module" src="/assets/js/testimonial-popup.js"></script>
+</body>
+</html>

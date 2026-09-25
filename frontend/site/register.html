@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Open account — MT5 Smart Market</title>
+  <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/assets/img/logo.svg" />
+  <meta name="theme-color" content="#05070d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <script src="/config.js"></script>
+</head>
+<body>
+  <div class="auth-shell">
+    <aside class="auth-aside">
+      <video autoplay muted loop playsinline><source src="/assets/video/market.mp4" type="video/mp4" /></video>
+      <div class="veil"></div>
+      <div class="content">
+        <a class="brand" href="/"><img class="mark" src="/assets/img/logo.svg" alt="" width="34" height="34" /> MT5 Smart Market</a>
+        <h2 style="font-size:1.7rem;margin-top:16px;max-width:440px">Open your trading &amp; investment account.</h2>
+        <ul class="muted mt-2" style="list-style:none;display:grid;gap:8px;font-size:14px">
+          <li>✓ Managed ROI investment plans</li>
+          <li>✓ Multi-asset trading desk</li>
+          <li>✓ Crypto &amp; bank funding, secured by MT5 Smart Market</li>
+          <li>✓ Identity verification &amp; linked wallets</li>
+        </ul>
+      </div>
+    </aside>
+    <main class="auth-main">
+      <div class="card auth-card" style="width:min(520px,94vw)">
+        <div id="form-wrap">
+          <h2 style="font-size:1.4rem">Create your account</h2>
+          <p class="muted mt-1" style="margin-bottom:20px">All new accounts are reviewed and approved by MT5 Smart Market before first sign-in.</p>
+          <form id="form" novalidate>
+            <div class="row">
+              <div class="field" style="flex:1"><label>First name</label><input class="input" name="firstName" required minlength="2" placeholder="Jane" autocomplete="given-name" /></div>
+              <div class="field" style="flex:1"><label>Last name</label><input class="input" name="lastName" required minlength="2" placeholder="Doe" autocomplete="family-name" /></div>
+            </div>
+            <div class="field"><label>Email address</label><input class="input" type="email" name="email" required placeholder="you@email.com" autocomplete="email" /></div>
+            <div class="row">
+              <div class="field" style="flex:1"><label>Phone <span class="hint">optional</span></label><input class="input" name="phone" placeholder="+44 7700 900000" autocomplete="tel" /></div>
+              <div class="field" style="flex:1"><label>Date of birth <span class="hint">optional</span></label><input class="input" type="date" name="dateOfBirth" /></div>
+            </div>
+            <div class="row">
+              <div class="field" style="flex:1"><label>Country</label><select class="input" name="country" required><option value="">Select country…</option></select></div>
+              <div class="field" style="flex:1"><label>Account currency</label><select class="input" name="currency" required><option value="">Select currency…</option></select></div>
+            </div>
+            <div class="field"><label>Account type</label><select class="input" name="accountType" required><option value="">Select account type…</option></select></div>
+            <div class="row">
+              <div class="field" style="flex:1"><label>Password</label><input class="input" type="password" name="password" required minlength="8" placeholder="At least 8 characters" autocomplete="new-password" /></div>
+              <div class="field" style="flex:1"><label>Confirm password</label><input class="input" type="password" name="confirmPassword" required minlength="8" placeholder="Re-enter password" autocomplete="new-password" /></div>
+            </div>
+            <div class="field"><label>Security question</label><select class="input" name="securityQuestion" required><option value="">Select a security question…</option></select></div>
+            <div class="field"><label>Security answer</label><input class="input" name="securityAnswer" required minlength="2" placeholder="Your answer (remember this exactly)" /></div>
+            <div class="field"><label>Referral code <span class="hint">optional</span></label><input class="input" name="referralCode" placeholder="ABCD1234" style="text-transform:uppercase" /></div>
+            <label class="row" style="align-items:flex-start;gap:9px;font-size:12.5px;color:var(--muted);margin:6px 0 14px">
+              <input type="checkbox" id="terms" required style="margin-top:3px" />
+              I confirm the information is accurate and I accept the platform terms &amp; risk disclosure.
+            </label>
+            <button class="btn primary block" type="submit" id="submit">Create account</button>
+          </form>
+          <p class="muted mt-3" style="font-size:13.5px">Already registered? <a href="/login" style="color:var(--brand)">Sign in</a></p>
+        </div>
+
+        <div id="done" class="hidden center">
+          <div style="font-size:44px">📨</div>
+          <h2 style="font-size:1.35rem;margin-top:10px">Account submitted for review</h2>
+          <p class="muted mt-2">Thanks <b id="done-name"></b>. Your account (<span id="done-email" class="mono"></span>) has been created and is <b>awaiting MT5 Smart Market approval</b>.</p>
+          <p class="muted mt-2">You'll be able to sign in as soon as MT5 Smart Market approves your account. You'll receive a notification by email.</p>
+          <a href="/login" class="btn primary block mt-3">Go to sign in</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { api, toast } from '/assets/js/core.js';
+    const form = document.getElementById('form');
+    const btn = document.getElementById('submit');
+    const ref = new URLSearchParams(location.search).get('ref');
+    if (ref) form.referralCode.value = ref.toUpperCase();
+
+    (async () => {
+      try {
+        const cfg = await api('/config', { silent: true });
+        form.country.insertAdjacentHTML('beforeend', cfg.countries.map((c) => `<option>${c}</option>`).join(''));
+        form.currency.insertAdjacentHTML('beforeend', cfg.currencies.map((c) => `<option value="${c.code}">${c.code} — ${c.name}</option>`).join(''));
+        form.accountType.insertAdjacentHTML('beforeend', cfg.accountTypes.map((c) => `<option>${c}</option>`).join(''));
+        form.securityQuestion.insertAdjacentHTML('beforeend', cfg.securityQuestions.map((q) => `<option>${q}</option>`).join(''));
+      } catch { toast('Could not load the sign-up options. Refresh the page.', 'error'); }
+    })();
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!document.getElementById('terms').checked) return toast('Please accept the terms to continue', 'warn');
+      if (form.password.value !== form.confirmPassword.value) return toast('Passwords do not match', 'error');
+      btn.disabled = true; btn.textContent = 'Creating…';
+      try {
+        const data = Object.fromEntries(new FormData(form));
+        Object.keys(data).forEach((k) => { if (!data[k]) delete data[k]; });
+        const res = await api('/auth/register', { method: 'POST', body: data });
+        document.getElementById('done-name').textContent = data.firstName;
+        document.getElementById('done-email').textContent = res.email;
+        document.getElementById('form-wrap').classList.add('hidden');
+        document.getElementById('done').classList.remove('hidden');
+        window.scrollTo(0, 0);
+      } catch { btn.disabled = false; btn.textContent = 'Create account'; }
+    });
+  </script>
+  <script type="module" src="/assets/js/i18n.js"></script>
+  <script type="module" src="/assets/js/testimonial-popup.js"></script>
+</body>
+</html>

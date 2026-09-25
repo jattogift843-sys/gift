@@ -1,0 +1,8 @@
+# Normalise line endings — LF in the repo, checked out as-is
+* text=auto eol=lf
+
+*.mp4 binary
+*.png binary
+*.jpg binary
+*.webp binary
+*.ico binary

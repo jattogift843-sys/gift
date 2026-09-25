@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Sign in — MT5 Smart Market</title>
+  <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/assets/img/logo.svg" />
+  <meta name="theme-color" content="#05070d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <script src="/config.js"></script>
+</head>
+<body>
+  <div class="auth-shell">
+    <aside class="auth-aside">
+      <video autoplay muted loop playsinline><source src="/assets/video/market.mp4" type="video/mp4" /></video>
+      <div class="veil"></div>
+      <div class="content">
+        <a class="brand" href="/"><img class="mark" src="/assets/img/logo.svg" alt="" width="34" height="34" /> MT5 Smart Market</a>
+        <h2 style="font-size:1.7rem;margin-top:16px;max-width:420px">Your desk and your portfolio, in one login.</h2>
+        <p class="muted mt-1">Trade global markets and track every managed investment plan from a single dashboard.</p>
+      </div>
+    </aside>
+    <main class="auth-main">
+      <div class="card auth-card">
+        <h2 style="font-size:1.4rem">Welcome back</h2>
+        <p class="muted mt-1" style="margin-bottom:22px">Sign in to your MT5 Smart Market account.</p>
+        <form id="form">
+          <div class="field">
+            <label>Email address</label>
+            <input class="input" type="email" name="email" required autocomplete="email" placeholder="you@email.com" />
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input class="input" type="password" name="password" required autocomplete="current-password" placeholder="••••••••" />
+          </div>
+          <button class="btn primary block" type="submit" id="submit">Sign in</button>
+        </form>
+        <div class="between mt-3" style="font-size:13.5px">
+          <a href="#" id="forgot" style="color:var(--brand)">Forgot password?</a>
+          <a href="/register" class="muted">Create an account</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { api, store, toast, modal, el, APP_URL } from '/assets/js/core.js';
+    const params = new URLSearchParams(location.search);
+    const form = document.getElementById('form');
+    const btn = document.getElementById('submit');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btn.disabled = true; btn.textContent = 'Signing in…';
+      try {
+        const data = Object.fromEntries(new FormData(form));
+        const session = await api('/auth/login', { method: 'POST', body: data });
+        store.token = session.token;
+        // hand off to the dashboard-app bundle (may be a different origin)
+        const next = params.get('next');
+        const path = next || (session.user.role === 'admin' ? '/admin' : '/app');
+        location.href = `${APP_URL}${path}#t=${encodeURIComponent(session.token)}`;
+      } catch { btn.disabled = false; btn.textContent = 'Sign in'; }
+    });
+
+    document.getElementById('forgot').addEventListener('click', (e) => {
+      e.preventDefault();
+      const box = el('div');
+      box.innerHTML = `
+        <h3>Reset your password</h3>
+        <p class="muted mt-1" style="font-size:13px">We'll ask your security question.</p>
+        <form id="fp1" class="mt-2">
+          <div class="field"><label>Account email</label><input class="input" type="email" name="email" required /></div>
+          <button class="btn primary block" type="submit">Continue</button>
+        </form>
+        <form id="fp2" class="mt-2 hidden">
+          <div class="field"><label id="sq"></label><input class="input" name="securityAnswer" required /></div>
+          <div class="field"><label>New password</label><input class="input" type="password" name="newPassword" minlength="8" required /></div>
+          <button class="btn primary block" type="submit">Reset password</button>
+        </form>`;
+      const m = modal(box);
+      let email = '';
+      box.querySelector('#fp1').addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        email = ev.target.email.value;
+        try {
+          const r = await api('/auth/forgot/start', { method: 'POST', body: { email } });
+          box.querySelector('#sq').textContent = r.securityQuestion;
+          box.querySelector('#fp1').classList.add('hidden');
+          box.querySelector('#fp2').classList.remove('hidden');
+        } catch { /* toast shown */ }
+      });
+      box.querySelector('#fp2').addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        try {
+          await api('/auth/forgot/complete', { method: 'POST', body: {
+            email, securityAnswer: ev.target.securityAnswer.value, newPassword: ev.target.newPassword.value,
+          } });
+          toast('Password reset. You can sign in now.', 'info');
+          m.close();
+        } catch { /* toast shown */ }
+      });
+    });
+  </script>
+  <script type="module" src="/assets/js/i18n.js"></script>
+  <script type="module" src="/assets/js/testimonial-popup.js"></script>
+</body>
+</html>

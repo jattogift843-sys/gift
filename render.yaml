@@ -1,0 +1,60 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+#
+# One web service that runs the API and serves both frontend bundles
+# (frontend/site + frontend/app). The database is Supabase (external), so no
+# Render database is defined here.
+#
+# Deploy:  Render dashboard → New → Blueprint → pick this repo → Apply, then
+#          fill in the secret env vars it prompts for (marked `sync: false`).
+# See DEPLOY-RENDER.md for the walkthrough.
+
+services:
+  - type: web
+    name: mt5-smart-market
+    runtime: node
+    plan: free
+    region: frankfurt          # same region as the Supabase project (eu-central-1)
+    branch: main
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "1"              # Render sits one proxy hop in front of the app
+      - key: JWT_SECRET
+        generateValue: true     # Render generates a strong secret
+      # ---- Supabase (set these in the dashboard — they are secrets) ----
+      - key: DATABASE_URL
+        sync: false             # transaction pooler, ...pooler.supabase.com:6543
+      - key: DIRECT_URL
+        sync: false             # session pooler, ...pooler.supabase.com:5432
+      # ---- seeded accounts (created on first boot; override for production) ----
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: MEMBER_EMAIL
+        sync: false
+      - key: MEMBER_PASSWORD
+        sync: false
+      # ---- email alerts (optional — leave SMTP_HOST blank to log to the DB) ----
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_SECURE
+        value: "false"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SMTP_FROM
+        value: MT5 Smart Market <no-reply@mt5smartmarket.com>
+      # ---- background engines (optional — these are the defaults) ----
+      - key: ACCRUAL_INTERVAL_MINUTES
+        value: "60"
+      - key: ROBOT_TICK_MINUTES
+        value: "1"

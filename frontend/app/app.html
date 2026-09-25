@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Dashboard — MT5 Smart Market</title>
+  <link rel="icon" href="/assets/img/logo.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/assets/img/logo.svg" />
+  <meta name="theme-color" content="#05070d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <script src="/config.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="/" data-site-link><img class="mark" src="/assets/img/logo.svg" alt="" width="34" height="34" /> Smart Market</a>
+      <nav id="nav">
+        <div class="side-link active" data-view="overview"><span class="i">▦</span> Overview</div>
+        <div class="side-link" data-view="portfolio"><span class="i">📊</span> Portfolio</div>
+        <div class="side-link" data-view="invest"><span class="i">🔁</span> Investment Plans</div>
+        <div class="side-link" data-view="myinvestments"><span class="i">📈</span> My Investments</div>
+        <div class="side-link" data-view="aibot"><span class="i">🤖</span> AI Trading Bot</div>
+        <div class="side-link" data-view="trade"><span class="i">💹</span> Trading Desk</div>
+        <div class="side-sep">Wallet</div>
+        <div class="side-link" data-view="deposit"><span class="i">＋</span> Deposit</div>
+        <div class="side-link" data-view="withdraw"><span class="i">↗</span> Withdraw</div>
+        <div class="side-link" data-view="transactions"><span class="i">≡</span> Transactions</div>
+        <div class="side-link" data-view="wallets"><span class="i">🔗</span> Linked Wallets</div>
+        <div class="side-sep">Account</div>
+        <div class="side-link" data-view="verification"><span class="i">🪪</span> Verification</div>
+        <div class="side-link" data-view="notifications"><span class="i">🔔</span> Notifications</div>
+        <div class="side-link" data-view="referrals"><span class="i">👥</span> Referrals</div>
+        <div class="side-link" data-view="profile"><span class="i">👤</span> Profile</div>
+        <div class="side-link" data-view="security"><span class="i">🔒</span> Security</div>
+      </nav>
+      <div style="margin-top:24px;padding:0 8px">
+        <button class="btn ghost block sm" id="logout">Sign out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <button class="btn ghost sm topbar-toggle" id="toggle">☰</button>
+        <div class="between" style="flex:1">
+          <div>
+            <div class="muted" style="font-size:12.5px">Available balance</div>
+            <div class="mono" style="font-size:1.4rem;font-weight:700" id="balance">—</div>
+          </div>
+          <div class="row" style="align-items:center;gap:14px">
+            <div class="bell" id="bell" title="Notifications">🔔<span class="count hidden" id="bell-count">0</span>
+              <div class="notif-panel hidden" id="notif-panel"></div>
+            </div>
+            <div class="row" style="align-items:center;gap:9px">
+              <div style="width:34px;height:34px;border-radius:50%;background:var(--brand-grad);display:grid;place-items:center;color:#04121a;font-weight:800" id="avatar">?</div>
+              <div style="font-size:13px"><b id="uname">…</b><div class="faint" id="uemail"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="dash-hero"></div>
+      <div id="notif-bar-slot"></div>
+
+      <section class="view active" id="view-overview"></section>
+      <section class="view" id="view-portfolio"></section>
+      <section class="view" id="view-invest"></section>
+      <section class="view" id="view-myinvestments"></section>
+      <section class="view" id="view-aibot"></section>
+      <section class="view" id="view-trade"></section>
+      <section class="view" id="view-deposit"></section>
+      <section class="view" id="view-withdraw"></section>
+      <section class="view" id="view-transactions"></section>
+      <section class="view" id="view-wallets"></section>
+      <section class="view" id="view-verification"></section>
+      <section class="view" id="view-notifications"></section>
+      <section class="view" id="view-referrals"></section>
+      <section class="view" id="view-profile"></section>
+      <section class="view" id="view-security"></section>
+    </main>
+  </div>
+
+  <script type="module" src="/assets/js/app.js"></script>
+  <script type="module" src="/assets/js/i18n.js"></script>
+  <script type="module" src="/assets/js/testimonial-popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+CREATE INDEX "emails_user_idx" ON "emails" USING btree ("user_id");--> statement-breakpoint
+CREATE INDEX "files_user_idx" ON "files" USING btree ("user_id");--> statement-breakpoint
+CREATE INDEX "investments_user_idx" ON "investments" USING btree ("user_id");--> statement-breakpoint
+CREATE INDEX "investments_status_idx" ON "investments" USING btree ("status");--> statement-breakpoint
+CREATE INDEX "kyc_user_idx" ON "kyc" USING btree ("user_id");--> statement-breakpoint
+CREATE INDEX "kyc_status_idx" ON "kyc" USING btree ("status");--> statement-breakpoint
+CREATE INDEX "login_events_user_idx" ON "login_events" USING btree ("user_id");--> statement-breakpoint
+CREATE INDEX "notifications_user_read_idx" ON "notifications" USING btree ("user_id","read");--> statement-breakpoint
+CREATE INDEX "referrals_referrer_idx" ON "referrals" USING btree ("referrer_id");--> statement-breakpoint
+CREATE INDEX "referrals_referee_idx" ON "referrals" USING btree ("referee_id");--> statement-breakpoint
+CREATE INDEX "robots_user_idx" ON "robots" USING btree ("user_id");--> statement-breakpoint
+CREATE INDEX "robots_status_idx" ON "robots" USING btree ("status");--> statement-breakpoint
+CREATE INDEX "trades_user_idx" ON "trades" USING btree ("user_id");--> statement-breakpoint
+CREATE INDEX "trades_status_idx" ON "trades" USING btree ("status");--> statement-breakpoint
+CREATE INDEX "trades_source_idx" ON "trades" USING btree ("source");--> statement-breakpoint
+CREATE INDEX "transactions_user_idx" ON "transactions" USING btree ("user_id");--> statement-breakpoint
+CREATE INDEX "transactions_type_status_idx" ON "transactions" USING btree ("type","status");--> statement-breakpoint
+CREATE INDEX "transactions_status_idx" ON "transactions" USING btree ("status");--> statement-breakpoint
+CREATE INDEX "users_role_idx" ON "users" USING btree ("role");--> statement-breakpoint
+CREATE INDEX "users_status_idx" ON "users" USING btree ("status");--> statement-breakpoint
+CREATE INDEX "wallets_user_idx" ON "wallets" USING btree ("user_id");
