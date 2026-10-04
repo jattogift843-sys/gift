@@ -29,7 +29,7 @@ const DEFAULT_PLANS = [
 ];
 
 async function seedAdmin() {
-  const existing = await db.users.findOne((u) => u.email === config.admin.email);
+  const existing = await db.users.findOne({ email: config.admin.email });
   if (existing) {
     if (existing.role !== 'admin' || existing.status !== 'active') {
       await db.users.update(existing.id, { role: 'admin', status: 'active' });
@@ -72,7 +72,7 @@ async function seedAdmin() {
 }
 
 async function seedMember() {
-  if (await db.users.findOne((u) => u.email === MEMBER.email)) return;
+  if (await db.users.findOne({ email: MEMBER.email })) return;
   const passwordHash = await bcrypt.hash(MEMBER.password, 10);
   await db.users.insert({
     id: newId('usr'),

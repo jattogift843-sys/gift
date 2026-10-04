@@ -4,7 +4,11 @@ import { ensureSeed } from './src/db/seed.js';
 import { startScheduler } from './src/jobs/scheduler.js';
 
 async function main() {
-  await ensureSeed();
+  try {
+    await ensureSeed();
+  } catch (err) {
+    console.error('[seed] Warning during initial seed:', err?.message || err);
+  }
   const app = createApp();
   startScheduler();
 
