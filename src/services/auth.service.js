@@ -121,7 +121,7 @@ export async function login({ email, password }, ctx = {}) {
       ip: ctx.ip || null,
       userAgent: ctx.userAgent || null,
       at: nowISO(),
-    });
+    }).catch((err) => console.error('[loginEvent] failed:', err?.message || err));
 
   if (!user) { record('invalid'); throw unauthorized('Invalid email or password'); }
   const match = await bcrypt.compare(String(password || ''), user.passwordHash);
