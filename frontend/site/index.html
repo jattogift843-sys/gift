@@ -17,7 +17,7 @@
   <nav class="nav">
     <div class="container">
       <a class="brand" href="/"><img class="mark" src="/assets/img/logo.svg" alt="" width="34" height="34" /> MT5 Smart Market</a>
-      <div class="nav-links">
+      <div class="nav-links" id="nav-links">
         <a href="#rates" class="hide-sm">Rates</a>
         <a href="#ai-bot" class="hide-sm">AI Bot</a>
         <a href="#about" class="hide-sm">About us</a>
@@ -26,6 +26,7 @@
         <a href="/login">Sign in</a>
         <a href="/register" class="btn primary sm">Open account</a>
       </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
     </div>
   </nav>
 
@@ -263,6 +264,15 @@
       e.target.reset();
       document.getElementById('contact-note').textContent = 'Thanks — your message has been received. Our team will reply to your email shortly.';
     });
+
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    if (navToggle && navLinks) {
+      navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+      navLinks.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => navLinks.classList.remove('open'));
+      });
+    }
 
     loadMarket(); loadRates(); loadTestimonials();
     setInterval(loadMarket, 6000);

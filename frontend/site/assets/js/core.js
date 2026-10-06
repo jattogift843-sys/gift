@@ -33,21 +33,28 @@ export const store = {
   } catch { /* ignore */ }
 })();
 
-export async function api(path, { method = 'GET', body, silent = false } = {}) {
+export async function api(path, { method = 'GET', body, silent = false, timeoutMs = 10000 } = {}) {
   const headers = { 'Content-Type': 'application/json' };
   if (store.token) headers.Authorization = `Bearer ${store.token}`;
   let res;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     res = await fetch(`${API_BASE}${path}`, {
       method,
       headers,
       credentials: 'include',
       cache: 'no-store',
+      signal: controller.signal,
       body: body ? JSON.stringify(body) : undefined,
     });
-  } catch {
-    if (!silent) toast('Network error — is the server running?', 'error');
-    throw new Error('network');
+  } catch (err) {
+    const isTimeout = err?.name === 'AbortError';
+    const msg = isTimeout ? 'Request timed out — please check your connection' : 'Network error — is the server running?';
+    if (!silent) toast(msg, 'error');
+    throw new Error(isTimeout ? 'timeout' : 'network');
+  } finally {
+    clearTimeout(timer);
   }
   const json = await res.json().catch(() => ({}));
   if (!res.ok || json.ok === false) {

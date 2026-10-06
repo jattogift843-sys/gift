@@ -59,11 +59,17 @@
         const data = Object.fromEntries(new FormData(form));
         const session = await api('/auth/login', { method: 'POST', body: data });
         store.token = session.token;
-        // hand off to the dashboard-app bundle (may be a different origin)
         const next = params.get('next');
         const path = next || (session.user.role === 'admin' ? '/admin' : '/app');
         location.href = `${APP_URL}${path}#t=${encodeURIComponent(session.token)}`;
-      } catch { btn.disabled = false; btn.textContent = 'Sign in'; }
+      } catch (err) {
+        btn.disabled = false; btn.textContent = 'Sign in';
+      } finally {
+        // Fallback: re-enable after 8 seconds if navigation/redirect stalled
+        setTimeout(() => {
+          if (btn.disabled) { btn.disabled = false; btn.textContent = 'Sign in'; }
+        }, 8000);
+      }
     });
 
     document.getElementById('forgot').addEventListener('click', (e) => {

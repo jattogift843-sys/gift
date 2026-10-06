@@ -72,8 +72,16 @@ async function mountChart(containerId, symbol, { interval = '60', tall = false }
   paintIdentity();
   $('#balance').textContent = C(user.balance ?? 0);
 
+  const toggleSidebar = (force) => {
+    const s = $('#sidebar');
+    const b = $('#sidebar-backdrop');
+    const open = force !== undefined ? force : !s.classList.contains('open');
+    s?.classList.toggle('open', open);
+    b?.classList.toggle('open', open);
+  };
   $('#logout').addEventListener('click', logout);
-  $('#toggle').addEventListener('click', () => $('#sidebar').classList.toggle('open'));
+  $('#toggle').addEventListener('click', () => toggleSidebar());
+  $('#sidebar-backdrop')?.addEventListener('click', () => toggleSidebar(false));
   $$('#nav .side-link').forEach((l) => l.addEventListener('click', () => go(l.dataset.view)));
   wireBell();
 
@@ -169,7 +177,8 @@ function go(view) {
   location.hash = view;
   $$('#nav .side-link').forEach((l) => l.classList.toggle('active', l.dataset.view === view));
   $$('.view').forEach((v) => v.classList.toggle('active', v.id === `view-${view}`));
-  $('#sidebar').classList.remove('open');
+  $('#sidebar')?.classList.remove('open');
+  $('#sidebar-backdrop')?.classList.remove('open');
   paintDashHero();
   renderers[view]?.();
 }
