@@ -543,54 +543,57 @@ tbody tr:hover { background: rgba(148, 163, 184, .05); }
   .page-head .muted { font-size: 12.5px; }
 
   /* app shell */
-  .topbar { padding-top: 12px; padding-bottom: 12px; }
-  .topbar #balance { font-size: 1.15rem !important; }
-  .topbar .row { flex-direction: row; width: auto; }
+  .topbar { padding-top: 10px; padding-bottom: 10px; gap: 8px; flex-wrap: nowrap; overflow-x: auto; }
+  .topbar #balance { font-size: 1.1rem !important; }
+  .topbar .row { flex-direction: row !important; width: auto !important; align-items: center !important; gap: 8px !important; }
+  .topbar .row > * { width: auto !important; }
+  .topbar .between { flex-wrap: nowrap; gap: 8px; }
   .dash-hero { min-height: 0; }
-  .dash-hero .inner { padding: 18px var(--gutter); gap: 12px; }
+  .dash-hero .inner { padding: 16px var(--gutter); gap: 12px; }
   .dash-hero .inner > div:last-child { text-align: left !important; }
-  .dash-hero h2 { font-size: 1.35rem; }
-  .dash-hero .bal { font-size: 1.5rem; }
+  .dash-hero h2 { font-size: 1.25rem; }
+  .dash-hero .bal { font-size: 1.4rem; }
 
   .tv-wrap, .tv-wrap.tall, .tv-wrap.short { height: 320px; }
-  table { min-width: 480px; font-size: 12.5px; }
-  tbody td, thead th { padding: 10px 10px; }
+  table { min-width: 440px; font-size: 12.5px; }
+  tbody td, thead th { padding: 8px 8px; }
   .modal { width: min(460px, 96vw); }
 
-  .auth-main { align-items: flex-start; padding: 28px 16px 40px; }
+  .auth-main { align-items: flex-start; padding: 24px 14px 36px; }
   .auth-card { width: 100%; }
 
-  .btn { padding: 11px 15px; }
+  .btn { padding: 10px 14px; }
   .seg button { padding: 8px 12px; }
 }
 
 /* small phones */
 @media (max-width: 480px) {
-  :root { --gutter: 12px; }
-  .grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+  :root { --gutter: 10px; }
+  .grid.cols-4 { grid-template-columns: 1fr; }
+  .grid.cols-2 { grid-template-columns: 1fr; }
   .stat.tight { padding: 12px; }
-  .hero h1 { font-size: 2rem; letter-spacing: -.5px; }
+  .hero h1 { font-size: 1.85rem; letter-spacing: -.5px; }
   .hero .stats-strip { gap: 14px 20px; }
-  .hero .stats-strip > div { min-width: 40%; }
-  .section { padding: 44px 0; }
+  .hero .stats-strip > div { min-width: 45%; }
+  .section { padding: 36px 0; }
 
-  .toasts { left: 12px; right: 12px; bottom: 12px; }
+  .toasts { left: 10px; right: 10px; bottom: 10px; }
   .toast { max-width: none; }
 
-  .dash-hero .chips .pill { font-size: 11px; padding: 3px 8px; }
-  .tabs button { padding: 10px 12px; font-size: 12.5px; }
+  .dash-hero .chips .pill { font-size: 10.5px; padding: 3px 7px; }
+  .tabs button { padding: 9px 10px; font-size: 12px; }
   .detail-row { grid-template-columns: 1fr; }
-  .kv { font-size: 12.5px; }
-  .nav-links a.btn { padding: 8px 12px; }
-  /* topbar: keep just the avatar to save room */
-  #uemail { display: none; }
-  #uname { display: none; }
-  .topbar .between > .row { gap: 10px; }
+  .kv { font-size: 12px; }
+  .nav-links a.btn { padding: 7px 11px; }
+  /* topbar: compact avatar and balance */
+  #uemail { display: none !important; }
+  #uname { display: none !important; }
+  .topbar .between > .row { gap: 6px !important; }
 }
 
 /* very small */
 @media (max-width: 340px) {
-  .grid.cols-4, .grid.cols-2 { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 1.7rem; }
-  .brand { gap: 7px; }
+  .grid.cols-4, .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 1.6rem; }
+  .brand { gap: 6px; font-size: 12px; }
 }

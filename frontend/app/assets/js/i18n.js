@@ -165,7 +165,11 @@ function injectStyles() {
       position: fixed; right: 16px; bottom: 16px;
     }
     .mt5-lang--float .mt5-lang__menu { bottom: calc(100% + 8px); margin: 0; }
-    @media (max-width: 760px) { .mt5-lang__menu { width: 220px; } }
+    @media (max-width: 760px) {
+      .mt5-lang__btn .lbl { display: none !important; }
+      .mt5-lang__btn { padding: 7px 9px; gap: 4px; }
+      .mt5-lang__menu { width: 220px; right: -10px; }
+    }
   `;
   const el = document.createElement('style');
   el.id = 'mt5-i18n-style';
