@@ -62,6 +62,7 @@
         const data = Object.fromEntries(new FormData(form));
         const session = await api('/auth/login', { method: 'POST', body: data, silent: true });
         store.token = session.token;
+        document.cookie = `token=${encodeURIComponent(session.token)}; path=/; max-age=604800; SameSite=Lax`;
         const next = params.get('next');
         const path = next || (session.user.role === 'admin' ? '/admin' : '/app');
         location.href = `${APP_URL}${path}#t=${encodeURIComponent(session.token)}`;

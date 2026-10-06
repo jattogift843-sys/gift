@@ -20,15 +20,16 @@ export const store = {
   },
 };
 
-/* Login hands the token over in the URL fragment (#t=…) when the site and app
- * are on different origins and can't share a cookie / localStorage. Pick it up
- * once, store it, and scrub it from the address bar. */
 (function adoptTokenFromHash() {
   try {
-    const m = /[#&](?:t|access_token)=([^&]+)/.exec(location.hash);
+    const m = /[#&?](?:t|access_token)=([^&]+)/.exec(location.href);
     if (m) {
-      store.token = decodeURIComponent(m[1]);
-      history.replaceState(null, '', location.pathname + location.search);
+      const tok = decodeURIComponent(m[1]);
+      store.token = tok;
+      document.cookie = `token=${encodeURIComponent(tok)}; path=/; max-age=604800; SameSite=Lax`;
+      if (location.hash && location.hash.includes('t=')) {
+        history.replaceState(null, '', location.pathname + location.search);
+      }
     }
   } catch { /* ignore */ }
 })();
@@ -133,9 +134,19 @@ export const el = (tag, props = {}, ...kids) => {
 
 export async function requireAuth(role) {
   try {
-    const { user } = await api('/auth/me', { silent: true });
+    let data;
+    try {
+      data = await api('/auth/me', { silent: true });
+    } catch (err) {
+      if (store.token && (err?.status === 401 || err?.message === 'network')) {
+        await new Promise((r) => setTimeout(r, 200));
+        data = await api('/auth/me', { silent: true });
+      } else {
+        throw err;
+      }
+    }
+    const user = data.user;
     if (role && user.role !== role) {
-      // wrong portal for this account — bounce to the right one (same bundle)
       location.href = user.role === 'admin' ? '/admin' : '/app';
       return null;
     }

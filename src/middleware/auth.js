@@ -21,7 +21,8 @@ export async function authenticate(req, _res, next) {
   try {
     const user = await db.users.findById(payload.sub);
     if (!user) return next(unauthorized('Account no longer exists'));
-    if (user.status === 'suspended') return next(forbidden('Account suspended'));
+    if (user.status === 'suspended') return next(forbidden('Your account is frozen. Please contact support.'));
+    if (user.status === 'pending') return next(forbidden('Your account is awaiting MT5 Smart Market approval.'));
     req.user = user;
     return next();
   } catch (err) {
