@@ -97,6 +97,25 @@ export function toast(message, kind = 'info', ms = 4200) {
   setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 250); }, ms);
 }
 
+/* ---------- inline form error alert ---------- */
+export function showFormError(target, message, kind = 'error') {
+  let node = typeof target === 'string' ? document.querySelector(target) : target;
+  if (!node) return;
+  const icon = kind === 'warning' || kind === 'warn' ? '⚠️' : (kind === 'info' ? 'ℹ️' : '🚨');
+  node.className = `auth-alert ${kind === 'warn' ? 'warning' : kind}`;
+  node.innerHTML = `
+    <span class="ico">${icon}</span>
+    <div class="msg">${message}</div>
+    <span class="close" title="Dismiss">✕</span>
+  `;
+  node.classList.remove('hidden');
+  node.querySelector('.close')?.addEventListener('click', () => node.classList.add('hidden'));
+}
+export function clearFormError(target) {
+  let node = typeof target === 'string' ? document.querySelector(target) : target;
+  if (node) node.classList.add('hidden');
+}
+
 /* ---------- dom ---------- */
 export const $ = (sel, root = document) => root.querySelector(sel);
 export const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];

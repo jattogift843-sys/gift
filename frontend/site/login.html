@@ -26,7 +26,8 @@
     <main class="auth-main">
       <div class="card auth-card">
         <h2 style="font-size:1.4rem">Welcome back</h2>
-        <p class="muted mt-1" style="margin-bottom:22px">Sign in to your MT5 Smart Market account.</p>
+        <p class="muted mt-1" style="margin-bottom:20px">Sign in to your MT5 Smart Market account.</p>
+        <div id="alert-box" class="auth-alert hidden"></div>
         <form id="form">
           <div class="field">
             <label>Email address</label>
@@ -47,25 +48,29 @@
   </div>
 
   <script type="module">
-    import { api, store, toast, modal, el, APP_URL } from '/assets/js/core.js';
+    import { api, store, toast, modal, el, APP_URL, showFormError, clearFormError } from '/assets/js/core.js';
     const params = new URLSearchParams(location.search);
     const form = document.getElementById('form');
     const btn = document.getElementById('submit');
+    const alertBox = document.getElementById('alert-box');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      clearFormError(alertBox);
       btn.disabled = true; btn.textContent = 'Signing in…';
       try {
         const data = Object.fromEntries(new FormData(form));
-        const session = await api('/auth/login', { method: 'POST', body: data });
+        const session = await api('/auth/login', { method: 'POST', body: data, silent: true });
         store.token = session.token;
         const next = params.get('next');
         const path = next || (session.user.role === 'admin' ? '/admin' : '/app');
         location.href = `${APP_URL}${path}#t=${encodeURIComponent(session.token)}`;
       } catch (err) {
         btn.disabled = false; btn.textContent = 'Sign in';
+        const msg = err?.message || 'Sign in failed. Please check your email and password.';
+        const kind = msg.includes('awaiting') || msg.includes('frozen') ? 'warning' : 'error';
+        showFormError(alertBox, msg, kind);
       } finally {
-        // Fallback: re-enable after 8 seconds if navigation/redirect stalled
         setTimeout(() => {
           if (btn.disabled) { btn.disabled = false; btn.textContent = 'Sign in'; }
         }, 8000);

@@ -33,6 +33,7 @@
         <div id="form-wrap">
           <h2 style="font-size:1.4rem">Create your account</h2>
           <p class="muted mt-1" style="margin-bottom:20px">All new accounts are reviewed and approved by MT5 Smart Market before first sign-in.</p>
+          <div id="alert-box" class="auth-alert hidden"></div>
           <form id="form" novalidate>
             <div class="row">
               <div class="field" style="flex:1"><label>First name</label><input class="input" name="firstName" required minlength="2" placeholder="Jane" autocomplete="given-name" /></div>
@@ -76,9 +77,10 @@
   </div>
 
   <script type="module">
-    import { api, toast } from '/assets/js/core.js';
+    import { api, toast, showFormError, clearFormError } from '/assets/js/core.js';
     const form = document.getElementById('form');
     const btn = document.getElementById('submit');
+    const alertBox = document.getElementById('alert-box');
     const ref = new URLSearchParams(location.search).get('ref');
     if (ref) form.referralCode.value = ref.toUpperCase();
 
@@ -94,19 +96,23 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (!document.getElementById('terms').checked) return toast('Please accept the terms to continue', 'warn');
-      if (form.password.value !== form.confirmPassword.value) return toast('Passwords do not match', 'error');
+      clearFormError(alertBox);
+      if (!document.getElementById('terms').checked) return showFormError(alertBox, 'Please accept the platform terms & risk disclosure to continue.', 'warn');
+      if (form.password.value !== form.confirmPassword.value) return showFormError(alertBox, 'Password and confirm password do not match.', 'error');
       btn.disabled = true; btn.textContent = 'Creating…';
       try {
         const data = Object.fromEntries(new FormData(form));
         Object.keys(data).forEach((k) => { if (!data[k]) delete data[k]; });
-        const res = await api('/auth/register', { method: 'POST', body: data });
+        const res = await api('/auth/register', { method: 'POST', body: data, silent: true });
         document.getElementById('done-name').textContent = data.firstName;
         document.getElementById('done-email').textContent = res.email;
         document.getElementById('form-wrap').classList.add('hidden');
         document.getElementById('done').classList.remove('hidden');
         window.scrollTo(0, 0);
-      } catch { btn.disabled = false; btn.textContent = 'Create account'; }
+      } catch (err) {
+        btn.disabled = false; btn.textContent = 'Create account';
+        showFormError(alertBox, err?.message || 'Failed to create account. Please check your inputs.', 'error');
+      }
     });
   </script>
   <script type="module" src="/assets/js/i18n.js"></script>
