@@ -138,7 +138,7 @@ export async function login({ email, password }, ctx = {}) {
   }
 
   record('success');
-  await db.users.update(user.id, { lastLoginAt: nowISO() }).catch((err) => console.error('[lastLoginAt update] failed:', err?.message || err));
+  db.users.update(user.id, { lastLoginAt: nowISO() }).catch((err) => console.error('[lastLoginAt update] failed:', err?.message || err));
   notify(user.id, {
     type: 'login',
     title: 'New sign-in to your account',

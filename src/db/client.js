@@ -22,10 +22,11 @@ if (!url) {
 export const sql = postgres(url, {
   prepare: false,
   ssl: 'require',
-  max: Number(process.env.PG_POOL_MAX || 16),
-  idle_timeout: 20,
-  connect_timeout: 15,
-  // fail a stuck query instead of hanging a request forever
+  max: Number(process.env.PG_POOL_MAX || 10),
+  idle_timeout: 300,
+  connect_timeout: 10,
+  max_lifetime: 60 * 30,
+  keep_alive: 15,
   connection: { statement_timeout: 20000 },
   onnotice: () => {},
 });
