@@ -50,11 +50,11 @@ export function createApp() {
   app.use('/api', (_req, res, next) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
     res.setHeader('Pragma', 'no-cache');
-    res.setTimeout(10000, () => {
+    res.setTimeout(30000, () => {
       if (!res.headersSent) {
         res.status(504).json({
           ok: false,
-          error: { code: 'TIMEOUT', message: 'Request timed out. Please try again.' },
+          error: { code: 'TIMEOUT', message: 'Request timed out. Please try again in a moment.' },
         });
       }
     });

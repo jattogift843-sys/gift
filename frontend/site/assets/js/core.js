@@ -34,7 +34,7 @@ export const store = {
   } catch { /* ignore */ }
 })();
 
-export async function api(path, { method = 'GET', body, silent = false, timeoutMs = 10000 } = {}) {
+export async function api(path, { method = 'GET', body, silent = false, timeoutMs = 25000 } = {}) {
   const headers = { 'Content-Type': 'application/json' };
   if (store.token) headers.Authorization = `Bearer ${store.token}`;
   let res;
@@ -102,11 +102,15 @@ export function toast(message, kind = 'info', ms = 4200) {
 export function showFormError(target, message, kind = 'error') {
   let node = typeof target === 'string' ? document.querySelector(target) : target;
   if (!node) return;
+  let cleanMsg = String(message || '');
+  if (cleanMsg === 'timeout' || cleanMsg === 'TIMEOUT' || cleanMsg.includes('timed out')) {
+    cleanMsg = 'Connection timed out — please try signing in again in a moment.';
+  }
   const icon = kind === 'warning' || kind === 'warn' ? '⚠️' : (kind === 'info' ? 'ℹ️' : '🚨');
   node.className = `auth-alert ${kind === 'warn' ? 'warning' : kind}`;
   node.innerHTML = `
     <span class="ico">${icon}</span>
-    <div class="msg">${message}</div>
+    <div class="msg">${cleanMsg}</div>
     <span class="close" title="Dismiss">✕</span>
   `;
   node.classList.remove('hidden');
