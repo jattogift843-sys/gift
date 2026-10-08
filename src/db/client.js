@@ -11,11 +11,10 @@ import * as schema from './schema.js';
  * (PgBouncer in transaction mode) does not support prepared statements.
  */
 
-const url = process.env.DATABASE_URL || '';
+const url = process.env.DIRECT_URL || process.env.DATABASE_URL || '';
 if (!url) {
   throw new Error(
-    'DATABASE_URL is not set. Add your Supabase connection string to .env — '
-    + 'see .env.example. Then run `npm run db:migrate`.',
+    'DATABASE_URL or DIRECT_URL is not set. Add your Supabase connection string to .env.',
   );
 }
 
@@ -23,11 +22,11 @@ export const sql = postgres(url, {
   prepare: false,
   ssl: 'require',
   max: Number(process.env.PG_POOL_MAX || 10),
-  idle_timeout: 300,
+  idle_timeout: 30,
   connect_timeout: 10,
-  max_lifetime: 60 * 30,
-  keep_alive: 15,
-  connection: { statement_timeout: 20000 },
+  max_lifetime: 60 * 15,
+  keep_alive: 10,
+  connection: { statement_timeout: 15000 },
   onnotice: () => {},
 });
 

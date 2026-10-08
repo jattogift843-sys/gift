@@ -33,8 +33,12 @@ export function startScheduler() {
     }
   };
 
-  runAccrual();
-  runRobots();
+  // Stagger initial execution by 5 seconds so server boot HTTP requests take priority
+  setTimeout(() => {
+    runAccrual();
+    runRobots();
+  }, 5000);
+
   const t1 = setInterval(runAccrual, accrualMs);
   const t2 = setInterval(runRobots, robotMs);
   t1.unref?.();
